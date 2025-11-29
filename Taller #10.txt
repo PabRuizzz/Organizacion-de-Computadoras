@@ -1,0 +1,52 @@
+//Taller #10 
+section .data
+char db 0
+newline db 10
+
+section .text
+global start
+start:
+
+; Imprimir A
+mov al, 0x41
+shl al, 1
+shr al, 1
+rol al. 1
+ror al, 1
+mov [char], al
+
+; Imprimir 0
+mov al, 0x30
+shl al, 1
+shr al, 1
+rol al, 1
+ror al, 1
+mov [char], al
+
+; Imprimir g
+mov al, 0x67
+shl al, 1
+shr al, 1
+rol al, 1
+ror al, 1
+mov [char], al
+
+mov eax, 4
+mov ebx, 1
+mov ecx. char
+mov edx, 1
+int 0x80
+
+; Imprimir =
+
+mov al, θx3D
+shl al, 1
+shr al, 1
+rol al, 1
+ror al, 1
+mov [char], al
+
+mov eax, 4
+mov ebx, 1
+mov ecx, newline
+mov edx, 1

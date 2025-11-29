@@ -1,0 +1,54 @@
+//Taler #5
+//suma para imprimir "A"
+section .data
+    num1 db 33         
+    num2 db 32         
+    result db 0
+
+//suma para imprimir ":"
+section .data
+    num1 db 21         
+    num2 db 37         
+    result db 0   
+
+//suma para imprimir "="
+section .data
+    num1 db 30         
+    num2 db 31         
+    result db 0
+
+//suma para imprimir "?"
+section .data
+    num1 db 30         
+    num2 db 33         
+    result db 0
+
+//resta para imprimir "B"
+section .data
+    num1 db 67         
+    num2 db 1         
+    result db 0  
+
+//resta para imprimir "x"
+section .data
+    num1 db 88        
+    num2 db 1         
+    result db 0 
+
+//resta para imprimir "+"
+section .data
+    num1 db 44        
+    num2 db 1         
+    result db 0 
+
+//resta para imprimir "‘"
+section .data
+    num1 db 40        
+    num2 db 1         
+    result db 0
+
+//resta para imprimir "{"
+section .data
+    num1 db 124        
+    num2 db 1         
+    result db 0

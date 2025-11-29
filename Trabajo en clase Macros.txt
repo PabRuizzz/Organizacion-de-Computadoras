@@ -1,0 +1,39 @@
+Trabajo en clase Macros
+%macro print_int 1 ;se declara la proxima seccion para la macro
+mov eax, 4
+mov ebx, 1
+mov ecx, %1 ;parametro
+mov edx, 4
+int 0x80
+%endmacro ;se declara la proxima seccion para la macro
+section .data ; declaración de arreglo
+array dd 1, 2, 3, 4, 5
+section .text
+global _start
+_start:
+mov ecx, 0 ;contador
+mov eax, 0 ;acumulador
+bucle:
+mov ebx, [array + ecx*4] ;acceso al índice del arreglo
+add eax, ebx
+inc ecx ;incrementar contador
+cmp ecx, 5 ;comparar contador
+jl bucle ;salto a bucle si es menor
+print_int eax ;llamado de macro
+mov eax, 1
+xor ebx, ebx
+int 0x80
+
+_start:
+mov ecx, 0 ;contador
+mov eax, 0 ;acumulador
+bucle:
+mov ebx, [array + ecx*4] ;acceso al índice del arreglo
+add eax, ebx
+inc ecx ;incrementar contador
+cmp ecx, 5 ;comparar contador
+jl bucle ;salto a bucle si es menor
+print_int eax ;llamado de macro
+mov eax, 1
+xor ebx, ebx
+int 0x80

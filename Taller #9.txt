@@ -1,0 +1,80 @@
+//Taller #9
+//inciso g
+section .data
+
+msg db 'Caracter:', ØxA
+len_msg equ $ - msg
+
+section .text
+global start
+
+_start:
+
+mov eax, 4
+mov ebx, 1
+mov ecx, msg	; dirección del mensaje
+mov edx, len_msg	; Longitud del mensaje
+
+int Øx80 ; dirección del carácter
+
+mov eax, 4
+mov ebx, 1	
+mov ecx, char
+mov edx. 1	; Longitud
+int 0x80
+
+; Salida
+
+mov eax, 1
+xor ebx, ebx
+int 0x80
+
+section .data
+char db '@' ;carácter definido directamente
+
+section .data
+msg db 'Caracter: ', 0xA
+len_msg equ $ msg
+
+section .bss
+buffer resb 1 ;Reservamos espacio para un carácter
+
+section text
+global_start
+
+_start:
+mov byte [buffer], 64 ;Guardar @
+
+len_msg
+mov eax, 4
+mov ebx, 1
+mov ecx, msg
+mov edx,
+
+int 0x80
+
+mov eax, 4
+mov ebx, 1
+mov ecx, buffer	;Dirección del carácter en memoria
+mov edx, 1
+int 0x80
+
+mov eax, 1
+xor ebx, ebx
+int Øx80
+
+Inciso e
+//impresion A
+movz eax, byte[result]
+add eax, 49
+mov [buffer], al
+
+//impresion \
+movz eax, byte[result]
+add eax, 76
+mov [buffer], al
+
+//impresion \
+movz eax, byte[result]
+add eax, 20
+mov [buffer], al

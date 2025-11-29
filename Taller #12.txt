@@ -1,0 +1,80 @@
+Taller #12
+//Ejercicio 2
+; Fecha: dd (1 byte) / mm (1 byte) / yyyy (2 bytes) = 4 bytes total
+struc Fecha
+.dia: resb 1
+.mes: resb 1
+.anio: resw 1
+endstruc
+struc Direccion
+.calle: resb 30
+.numero: resw 1
+.colonia: resb 30
+endstruc
+struc Persona
+.curp: resb 19 ; 18 caracteres + 1 byte nulo (terminador)
+.email: resb 50 ; Buffer fijo para el correo
+.nacimiento: resb Fecha_size ; Reserva 4 bytes
+.domicilio: resb Direccion_size
+.padding: resb 1
+endstruc
+mov ebx, fechas_array ; Dirección base del arreglo
+mov ecx, 1 ; Índice (segunda fecha)
+
+mov ax, [ebx + ecx*4 + 2]
+
+//Ejercicio 3
+section .data
+    message db "La suma de los valores es: ", 0
+    newline db 10, 0        ; Nueva línea para la salida
+
+section .bss
+    buffer resb 4           ; Buffer para convertir números a caracteres
+
+section .text
+    global _start
+
+_start:
+    ; Imprime el mensaje inicial
+    mov eax, 4              ; sys_write
+    mov ebx, 1
+    mov ecx, message        ; dirección del mensaje
+    mov edx, 26             ; Longitud del mensaje
+    int 0x80
+
+    ; Imprime la suma de los valores
+    mov eax, 42
+    call print_number
+
+    ; imprimir nueva línea
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, newline
+    mov edx, 1
+    int 0x80
+
+    ; Salir del programa
+    mov eax, 1              ; Syscall para 'exit'
+    mov ebx, 0              ; Código de salida
+    int 0x80
+
+print_number:
+    mov ecx, buffer+4       ; apuntar al final del buffer
+    mov ebx, 10
+
+.convert:
+    xor edx, edx
+    div ebx
+    add dl, '0'             ; convierte dígito a ASCII
+    dec ecx
+    mov [ecx], dl
+    test eax, eax
+    jnz .convert
+
+    mov eax, 4
+    mov ebx, 1
+    mov edx, buffer+4
+    sub edx, ecx
+    mov ecx, ecx
+    int 0x80
+    ret

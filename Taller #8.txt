@@ -1,0 +1,269 @@
+//Taller #8
+// Comparador de Números
+
+section .data
+msg_equal db 'Los numeros son iguales', 0xA, 0
+msg_greater db 'El primer numero es mayor', 0xA, 0
+msg_smaller db 'El primer numero es menor', 0xA, 0
+msg_negative db 'El numero es negativo', 0xA, 0
+
+section .bss
+num1 resb 1
+num2 resb 1
+
+section .text
+global _start
+
+_start:
+; Leer los dos números
+
+; Comparar los números
+mov al, [num1] ; Cargar el primer número
+cmp al, [num2] ; Comparar con el segundo número
+je equal_flag ; Si son iguales, saltar a equal_flag
+jl smaller_flag ; Si el primer número es menor, saltar a smaller_flag
+jg greater_flag ; Si el primer número es mayor, saltar a greater_flag
+
+equal_flag:
+
+mov ecx, msg_equal
+jmp check_negative 
+
+smaller_flag:
+mov ecx, msg_smaller
+jmp check_negative
+
+greater_flag:
+mov ecx, msg_greater
+jmp check_negative
+
+check_negative:
+mov al, [num1]
+test al, al 
+js num1_negative 
+
+
+mov al, [num2]
+test al, al
+js num2_negative 
+
+jmp print_result 
+
+num1_negative:
+mov ecx, msg_negative
+jmp print_result
+
+num2_negative:
+mov ecx, msg_negative
+jmp print_result
+// Clasificación de Números
+msg_positive db 'El numero es positivo', 0xA, 0
+msg_negative db 'El numero es negativo', 0xA, 0
+msg_zero db 'El numero es cero', 0xA, 0
+
+section .bss
+num resb 1
+
+section .text
+global _start
+
+_start:
+; Leer número en [num]
+
+mov al, [num]
+cmp al, 0
+je zero_flag
+jl negative_flag
+jg positive_flag
+
+zero_flag:
+mov ecx, msg_zero
+jmp print_result
+
+negative_flag:
+mov ecx, msg_negative
+jmp print_result
+
+positive_flag:
+mov ecx, msg_positive
+jmp print_result
+// Par o Impar
+msg_even db 'El numero es par', 0xA, 0
+msg_odd db 'El numero es impar', 0xA, 0
+
+section .bss
+num resb 1
+
+section .text
+global _start
+
+_start:
+
+
+mov al, [num]
+test al, 1 
+jp even_flag 
+jnp odd_flag 
+
+even_flag:
+mov ecx, msg_even
+jmp print_result
+
+odd_flag:
+mov ecx, msg_odd
+jmp print_result
+
+//Simulación de Overflow
+
+section .data
+msg_overflow db 'Overflow detectado', 0xA, 0
+msg_no_over db 'No hubo overflow', 0xA, 0
+
+section .bss
+num1 resb 1
+num2 resb 1
+
+section .text
+global _start
+
+_start:
+mov al, [num1]
+add al, [num2]
+jo overflow_flag
+jno no_overflow_flag
+
+overflow_flag:
+mov ecx, msg_overflow
+jmp print_result
+
+no_overflow_flag:
+mov ecx, msg_no_over
+jmp print_result
+
+//Simulación de Acarreo
+
+section .data
+msg_carry db 'Hubo acarreo', 0xA, 0
+msg_no_c db 'No hubo acarreo', 0xA, 0
+
+section .bss
+num1 resb 1
+num2 resb 1
+
+section .text
+global _start
+
+_start:
+mov al, [num1]
+add al, [num2]
+jc carry_flag
+jnc no_carry_flag
+
+carry_flag:
+mov ecx, msg_carry
+jmp print_result
+
+no_carry_flag:
+mov ecx, msg_no_c
+jmp print_result
+
+//Mínimo y Máximo de Tres Números: Leer tres números
+
+section .data
+msg_min db 'El minimo es: ', 0
+msg_max db 'El maximo es: ', 0
+
+section .bss
+num1 resb 1
+num2 resb 1
+num3 resb 1
+min resb 1
+max resb 1
+
+section .text
+global _start
+
+_start:
+mov al, [num1]
+mov [min], al
+mov [max], al
+
+; Comparar con num2
+mov al, [num2]
+cmp al, [min]
+jl update_min2
+cmp al, [max]
+jg update_max2
+
+update_min2:
+mov [min], al
+update_max2:
+mov [max], al
+
+; Comparar con num3
+mov al, [num3]
+cmp al, [min]
+jl update_min3
+cmp al, [max]
+jg update_max3
+
+update_min3:
+mov [min], al
+update_max3:
+mov [max], al
+
+// Ordenamiento de Dos Números leer dos números e intercambiarlos si no están en orden
+section .data
+msg_order db 'Numeros ordenados ascendentemente', 0xA, 0
+
+section .bss
+num1 resb 1
+num2 resb 1
+
+section .text
+global _start
+
+_start:
+mov al, [num1]
+cmp al, [num2]
+jg swap_flag
+
+jmp print_result
+
+swap_flag:
+mov bl, [num2]
+mov [num2], al
+mov [num1], bl
+
+//Ciclo de Conteo sin Comparaciones: Implementar un contador de 0 a 9.
+
+section .data
+msg db 'Contador: ', 0
+
+section .text
+global _start
+
+_start:
+mov cx, 0
+
+loop_start:
+; imprimir valor de CX
+inc cx
+cmp cx, 10
+jl loop_start
+
+//taller 10 Inciso e
+//impresion A
+movz eax, byte[result]
+add eax, 49
+mov [buffer], al
+
+//impresion \
+movz eax, byte[result]
+add eax, 76
+mov [buffer], al
+
+//impresion \
+movz eax, byte[result]
+add eax, 20
+mov [buffer], al
